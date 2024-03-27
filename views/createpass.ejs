@@ -1,0 +1,56 @@
+<%- include('partials/header') %>
+<title>Create Password</title>
+</head>
+<div class="container mt-5">
+  <h1>Create Password</h1>
+
+  <div class="row d-flex">
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-body">
+          <!-- Makes POST request to /register route -->
+          <form id="form">
+            <div class="col-md-6 form-group">
+              <label for="password" class="form-label">New Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                required
+                name="password"
+              />
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="conformpassword" class="form-label"
+                >Conform Password</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="conformpassword"
+                required
+                name="conformpassword"
+              />
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-dark" onclick="submitData()">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-sm-4">
+        <div class="card social-block">
+          <div class="card-body">
+            <a class="btn btn-block" href="/auth/google" role="button">
+              <i class="fab fa-google"></i>
+              Sign Up with Google
+            </a>
+          </div>
+        </div>
+      </div> -->
+  </div>
+</div>
+<script src="/js/conformpass.js"></script>
+<%- include('partials/footer') %>

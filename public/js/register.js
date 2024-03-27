@@ -16,14 +16,14 @@ async function submitData() {
       });
       if (!response.ok) {
         alert("User alredy Exist please try with other Username")
-        window.location.replace('http://localhost:3000/register')
+        window.location.replace('http://localhost:3000/api/register')
       }
       // console.log(response);
       
       if (response.status == 200) {
         var responsejson= await response.json();
       console.log(responsejson);
-        window.location.replace('http://localhost:3000/thanks?randCode='+responsejson.randCode+'&id='+responsejson.uid)
+        window.location.replace('http://localhost:3000/api/thanks?randCode='+responsejson.randCode+'&id='+responsejson.uid)
       } 
       
 

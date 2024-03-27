@@ -1,20 +1,27 @@
 <%- include('partials/header') %>
-<h1>
-    Thanks For Your Response
-</h1>
-<a id="acivatelink"></a>
-<h3 class="text-danger" hidden>This link is expired!</h3>
-<a id="redirectLink"></a>
-<% if (locals.invaid) {%>
-    <script>
-        var a = document.querySelector("h3")
-        a.hidden = false     
-        document.querySelector("#acivatelink").hidden = true
-        var redirect = document.querySelector("#redirectLink")   
-        redirect.setAttribute("href","http://localhost:3000/activelink?randCode="+'<%=randoCode%>'+"&id="+'<%=id%>')
-        redirect.innerText = "click here to reset password"
+<title>Thanks</title>
+</head>
+<body>
+  <h1>Thanks For Your Response</h1>
+  <a id="acivatelink"></a>
+  <h3 class="text-danger" hidden>This link is expired!</h3>
+  <a id="redirectLink"></a>
+  <% if (locals.invaid) {%>
+  <script>
+    var a = document.querySelector("h3");
+    a.hidden = false;
+    document.querySelector("#acivatelink").hidden = true;
+    var redirect = document.querySelector("#redirectLink");
+    redirect.setAttribute(
+      "href",
+      "http://localhost:3000/api/activelink?randCode=" +
+        "<%=randoCode%>" +
+        "&id=" +
+        "<%=id%>"
+    );
+    redirect.innerText = "click here to reset password";
+  </script>
+  <% } %>
+  <script src="/js/thanks.js"></script>
+  <%- include('partials/footer') %>
 
-    </script>
-<% } %>
-<script src="js/thanks.js"></script>
-<%- include('partials/footer') %>
