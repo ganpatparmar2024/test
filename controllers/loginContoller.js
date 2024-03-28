@@ -9,30 +9,36 @@ const login = async (req, res) => {
       const result = await select("select * from users where email =?", [
         username,
       ]);
+      
     
       if (result.length > 0) {
+        
         bcrypt.compare(password, result[0].password, (err, results) => {
             if (err) {
               console.log("compare error",err);
               return 
             }
+            console.log(result);
+            var username = result[0].email
+            console.log(username);
             if (results) {
               console.log("verified User");
-              const token = Jwt.sign(
-                { username: user.username },
-                'secret',
-                {
-                  expiresIn: "1h",
-                }
-              );
+              var payload = username
+              console.log(payload);
+              const token = Jwt.sign({payload}, "secret", {
+                expiresIn: "10m",
+              });
           
               res.json({ message: "Logged in successfully", token });
             } else {
               console.log("unverified user");
-             
-              return
+              return res.status(400).json({ message: "Invalid username or password" });
+              
             }
           });
+      }
+      else{
+        return res.status(400).json({ message: "Invalid username or password" });
       }
   
       

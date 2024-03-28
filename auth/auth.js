@@ -1,38 +1,24 @@
-import passport from 'passport';
-import {Strategy as localStrategy } from "passport-local"
+import { Strategy, ExtractJwt } from 'passport-jwt';
 import { select } from '../Services/registerService.js';
-// const passport = require('passport');
-// const localStrategy = require('passport-local').Strategy;
-// const UserModel = require('../model/model');
-// ...
 
-// ...
-
-passport.use(
-    'login',
-    new localStrategy(
-      {
-        usernameField: 'email',
-        passwordField: 'password'
-      },
-      async (email, password, done) => {
-        try {
-          const user = await UserModel.findOne({ email });
-  
-          if (!user) {
-            return done(null, false, { message: 'User not found' });
-          }
-  
-          const validate = await user.isValidPassword(password);
-  
-          if (!validate) {
-            return done(null, false, { message: 'Wrong Password' });
-          }
-  
-          return done(null, user, { message: 'Logged in Successfully' });
-        } catch (error) {
-          return done(error);
-        }
+export const applyPassportStrategy = passport => {
+  const options = {};
+  options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+  options.secretOrKey = 'secret'
+  passport.use(
+    new Strategy(options, async (payload, done) => {
+      console.log("iam in stregey");
+      console.log(payload.payload);
+      const result = await select("select * from users where email =?", [
+        payload.payload,
+      ]);
+      if (result.length>0) {
+        return done(null, {
+          username: result[0].email,          
+        });
       }
-    )
+      return done(null, false);
+      
+    })
   );
+};
