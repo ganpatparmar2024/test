@@ -1,0 +1,120 @@
+<%- include('partials/header') %>
+<title>Table With OrderBY</title>
+
+</head>
+
+    <body class="d-flex flex-column align-items-center">
+        <h1>Ganpat Hasmukhbhai Parmar</h1>
+        <h2>Student Details</h2>
+      
+      
+        
+        <table class="table">
+          <thead class="bg-warning">
+      
+            <tr>
+              <% fields.forEach(field=> { %>
+                <td>
+                  <%=field.name %>
+                  <span><a href="/api/tablewitorderby?order=ASC&field=<%= field.name %>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-up" viewBox="0 0 16 16">
+                    <path d="M3.5 12.5a.5.5 0 0 1-1 0V3.707L1.354 4.854a.5.5 0 1 1-.708-.708l2-1.999.007-.007a.5.5 0 0 1 .7.006l2 2a.5.5 0 1 1-.707.708L3.5 3.707zm3.5-9a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"/>
+                  </svg></a>
+                  <a href="/api/tablewitorderby?order=DESC&field=<%= field.name %>">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-down" viewBox="0 0 16 16">
+                      <path d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"/>
+                    </svg>
+                  </a></span>
+                
+                </td>
+                <% }) %>
+      
+            </tr>
+          </thead>
+          <tbody>
+            <% result.forEach(res=> { %>
+              <tr>
+                <td>
+                  <%= res.id %>
+                </td>
+                <td>
+                  <%= res.Name %>
+                </td>
+                <td>
+                  <%= res.fathersName %>
+                </td>
+                <td>
+                  <%= res.mothersName %>
+                </td>
+                <td>
+                  <%= res.gender %>
+                </td>
+                <td>
+                  <%= res.contactNo %>
+                </td>
+                <td>
+                  <%= res.caste %>
+                </td>
+                <td>
+                  <%= res.parentsCategory %>
+                </td>
+                <td>
+                  <%= res.fathersOccupation %>
+                </td>
+                <td>
+                  <%= res.aggregatePercentage %>
+                </td>
+                <td>
+                  <%= res.subjectCombination %>
+                </td>
+                <td>
+                  <%= res.createdTime %>
+                </td>
+              </tr>
+      
+              <% }) %>
+          </tbody>
+        </table>
+        <nav aria-label="Pagination">
+          <ul class="pagination">
+            <% if (pid==1) { %>
+              <li class="page-item disabled">
+                <a class="page-link " href="/api/tablewitorderby?page=1&order=<%= order %>&field=<%= field %>" tabindex="-1">Start</a>
+              </li>
+              <li class="page-item disabled"><a class="page-link" href="/api/tablewitorderby?page=<%= parseInt(pid)-1 %>&order=<%= order %>&field=<%= field %>">Previous</a></li>
+              <%} else{ %>
+                <li class="page-item">
+                  <a class="page-link" href="/api/tablewitorderby?page=1&order=<%= order %>&field=<%= field %>" tabindex="-1">Start</a>
+                <li class="page-item"><a class="page-link" href="/api/tablewitorderby?page=<%= parseInt(pid)-1 %>&order=<%= order %>&field=<%= field %>">Previous</a></li>
+                </li>
+                <% }%>
+      
+      
+                  <li class="page-item disabled">
+                    <a class="page-link" href="/api/tablewitorderby?page=<% pid %>&order=<%= order %>&field=<%= field %>">
+                      <%= pid %>
+                    </a>
+                  </li>
+                  <% if(pid==20){ %>
+                    <li class="page-item disabled"><a class="page-link" href="/api/tablewitorderby?page=<%= parseInt(pid)+1 %>&order=<%= order %>&field=<%= field %>">Next</a></li>
+                    <li class="page-item disabled">
+                      <a class="page-link" href="/api/tablewitorderby?page=20&order=<%= order %>&field=<%= field %>">Last</a>
+                    </li>
+                    <% } else { %>
+                      <li class="page-item"><a class="page-link" href="/api/tablewitorderby?page=<%= parseInt(pid)+1 %>&order=<%= order %>&field=<%= field %>">Next</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="/api/tablewitorderby?page=20&order=<%= order %>&field=<%= field %>">Last</a>
+                      </li>
+                      <% } %>
+      
+          </ul>
+        </nav>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous"></script>
+          <%- include('partials/footer') %>

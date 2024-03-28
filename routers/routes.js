@@ -9,6 +9,9 @@ import { router as thanks } from "./thanks.js";
 import { router as activeLink } from "./activelink.js";
 import { router as password } from "./password.js";
 import { router as login} from "./login.js";
+import { router as tablewitorderby } from "./table_with_orderby.js";
+import { router as attendance } from "./attendance.js";
+import { router as result } from "./result.js";
 const router = express.Router();
 
 router.use("/kukuCube", kukuCube);
@@ -21,4 +24,7 @@ router.use("/thanks", thanks);
 router.use("/activeLink", activeLink);
 router.use("/password", password)
 router.use("/login",login)
+router.use("/tablewitorderby",tablewitorderby)
+router.use("/attendance",attendance)
+router.use("/result",result)
 export { router };

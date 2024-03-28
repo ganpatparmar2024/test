@@ -1,0 +1,78 @@
+<%- include('partials/header') %>
+<title>Report</title>
+</head>
+
+<body>
+  <main class="d-flex flex-column align-items-center">
+
+  <h1>Ganpat Hasmukhbhai Parmar</h1>
+  <h2>Report Card</h2>
+
+  <h3>Student Name:- <%= result[0].Name %>
+  </h3>
+  <h3>Student Roll No:- <%= sid %>
+  </h3>
+  <table class="table table-striped table-bordered text-center ">
+    <thead class="bg-info">
+      <tr>
+        <th scope="col" rowspan="2">Subject Name</th>
+        <th scope="col" colspan="3">Terminal</th>
+        <th scope="col" colspan="3">Prelim</th>
+        <th scope="col" colspan="3">Final</th>
+        <th scope="col" rowspan="2">Total</th>
+      </tr>
+      <tr>
+        <th scope="col">Theory(30)</th>
+        <th scope="col">Practical(20)</th>
+        <th scope="col">Total</th>
+        <th scope="col">Theory(30)</th>
+        <th scope="col">Practical(20)</th>
+        <th scope="col">Total</th>
+        <th scope="col">Theory(70)</th>
+        <th scope="col">Practical(30)</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% var finalTotal = 0 %>
+      <%  for (let i = 0; i < result.length; i+=3) {%>
+        <% var total = 0 %>
+        <tr>
+          <th scope="row"><%= result[i].Subject_Name %></th>
+        
+       <%   for (let j = i; j < 3+i; j++) {%>
+            
+            <td><%= result[j].Obtain_Marks_theory  %></td>
+            <td><%= result[j].Obtain_Marks_Practical %></td>
+            <td><%= result[j].Obtain_Marks_theory + result[j].Obtain_Marks_Practical %></td>
+            <% total = total + result[j].Obtain_Marks_theory + result[j].Obtain_Marks_Practical %>
+                  
+       <% } %> 
+          <td><%= total %></td>
+          <% finalTotal+=total %>
+        </tr>
+        
+      
+    <% }  %>
+      
+    </tbody>
+  </table>
+  <% var percentage = ((finalTotal/1200)*100).toPrecision(4) %>
+  <h4>Percentage:- <%=  percentage   %></h4>
+  <% if (percentage>33) { %>
+      <p class="text-success">Congratulation You Have Passed Exam :)</p>
+  
+  <% } else { %>
+   <p class="text-danger">Sorry! You Could Not Clear Exam :(</p>
+   <% } %>
+</main>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+    <%- include('partials/footer') %>
