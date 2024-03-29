@@ -1,9 +1,19 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { select } from '../Services/registerService.js';
 
+var cookieExtractor = function(req) {
+  var token = null;
+  if (req && req.cookies) {
+      token = req.cookies['jwt'];
+  }
+  return token;
+};
+
+
 export const applyPassportStrategy = passport => {
   const options = {};
-  options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+  options.jwtFromRequest = cookieExtractor;
+  
   options.secretOrKey = 'secret'
   passport.use(
     new Strategy(options, async (payload, done) => {

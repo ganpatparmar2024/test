@@ -28,8 +28,9 @@ const login = async (req, res) => {
               const token = Jwt.sign({payload}, "secret", {
                 expiresIn: "10m",
               });
-          
-              res.json({ message: "Logged in successfully", token });
+              res.cookie('jwt',token)
+              res.redirect('/api/home')
+        
             } else {
               console.log("unverified user");
               return res.status(400).json({ message: "Invalid username or password" });

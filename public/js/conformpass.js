@@ -28,7 +28,7 @@ function checkpass() {
         }
         if (response.status == 201) {
           alert("You are successfully registerd")
-          window.location = "http://localhost:3000/api/register"
+          window.location = "http://localhost:3000/api/login"
         }
       } catch (error) {
         console.log(error);

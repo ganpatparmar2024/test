@@ -3,14 +3,9 @@ import express from "express"
 const router = express.Router();
 
 router.get(
-  '/profile',
+  '/',
   (req, res) => {
-    console.log('you are in profile section');
-    res.json({
-      message: 'You made it to the secure route',
-      user: req.user,
-      token: req.query.secret_token
-    })
+    res.render('union_of_all.ejs')
   }
 );
 

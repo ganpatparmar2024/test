@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <title>Ajax Practice</title>
+  </head>
+  <body>
+    <main>
+      <nav aria-label="...">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" id="0">Basic Details</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" id="1">Education Details</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" id="2">Work Experinece</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" id="3">Language Known</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" id="4">Technology Known</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" id="5">Refrences</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" id="6">Prefrences</a>
+          </li>
+        </ul>
+      </nav>
+      <form id="form">
+        <fieldset
+          style="border-width: 5px; width: fit-content"
+          class="form-section"
+          id="basicdetails"
+        >
+          <legend>Basic Detais:</legend>
+          <table cellSpacing="20">
+            <tr>
+              <td>
+                <div class="form-group name">
+                  <label for="name">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    placeholder="Enter Your Name"
+                    name="name"
+                  />
+                </div>
+              </td>
+              <td>
+                <div class="form-group lastName">
+                  <label for="lastName">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lastName"
+                    name="lastName"
+                    placeholder="Enter Your Last Name"
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group designation">
+                  <label for="designation">Designation</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="designation"
+                    name="designation"
+                    placeholder="Enter Your Designation"
+                  />
+                </div>
+              </td>
+              <td>
+                <div class="form-group gender">
+                  <label for="gender">Gender</label>
+                  <div class="form-check-label" id="gender">
+                    <div class="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        id="male"
+                        name="gender"
+                        class="custom-control-input"
+                        value="male"
+                      />
+                      <label class="custom-control-label" for="male"
+                        >Male</label
+                      >
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        id="female"
+                        name="gender"
+                        class="custom-control-input"
+                        value="female"
+                      />
+                      <label class="custom-control-label" for="female"
+                        >Female</label
+                      >
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        id="other"
+                        name="gender"
+                        class="custom-control-input"
+                        value="other"
+                      />
+                      <label class="custom-control-label" for="other"
+                        >Other</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group contactNo">
+                  <label for="contactNo">Contact Number</label>
+                  <input
+                    type="text"
+                    name="contactNo"
+                    class="form-control"
+                    id="contactNo"
+                    placeholder="Enter Your Contact Number"
+                  />
+                </div>
+              </td>
+              <td>
+                <div class="form-group email">
+                  <label for="email">Email</label>
+                  <input
+                    type="text"
+                    name="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Enter Your Email"
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group relationshipStatus">
+                  <label for="relationshipStatus">Relationship Status</label>
+                  <select
+                    class="custom-select"
+                    id="relationshipStatus"
+                    name="relationshipStatus"
+                  >
+                    <option value="">Select Your relationshipStatus</option>
+                    <option
+                      value="merried"
+                      name="relationshipStatus"
+                      id="merried"
+                    >
+                      Merried
+                    </option>
+                    <option
+                      id="unmerried"
+                      value="unmerried"
+                      name="relationshipStatus"
+                    >
+                      Unmerried
+                    </option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div class="form-group birthday">
+                  <label for="birthday">Birthday:</label>
+                  <input
+                    type="text"
+                    id="birthday"
+                    name="birthday"
+                    placeholder="Enter Your Birth Date"
+                    aria-describedby="bdate-area"
+                  />
+                  <div id="bdate-area">
+                    Please Enter Date in YYYY-MM-DD form.
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group city">
+                  <label for="city">City</label>
+                  <input type="text" id="city" name="city" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group zipcode">
+                  <label for="zipcode">Zipcode:</label>
+                  <input type="text" id="zipcode" name="zipcode" />
+                </div>
+              </td>
+
+              <td>
+                <div class="form-group state">
+                  <label for="state">State</label>
+                  <select name="state" id="state">
+                    <option value="">Select Your State</option>
+                    <option value="gujarat" name="state">Gujarat</option>
+                    <option value="maharastra" name="state">Maharastra</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group address">
+                  <label for="address1">Address1</label>
+                  <textarea name="address1" id="address"></textarea>
+                </div>
+              </td>
+              <td>
+                <div class="form-group state">
+                  <label for="address2">Address2</label>
+                  <textarea name="address2" id="address2"></textarea>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </fieldset>
+        <fieldset
+          style="border-width: 5px; width: fit-content"
+          class="form-section"
+        >
+          <legend>Education Details:</legend>
+          <table cellSpacing="20">
+            <tr>
+              <td>SSC Result</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group education1">
+                  <label for="education1">Education</label>
+                  <select name="education1" id="education1">
+                    <option value="">Select Your Qalificaion</option>
+                    <option value="class10" name="education1">Class 10</option>
+                    <option value="class12" name="education1">Class 12</option>
+                    <option value="be" name="education1">B.tech</option>
+                    <option value="me" name="education1">M.tech</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div class="form-group passingyear1">
+                  <label for="passingyear1">Passing Year</label>
+                  <input type="text" id="passingyear1" name="education1" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group percentage1">
+                  <label for="percentage1">Percentage</label>
+                  <input type="text" id="percentage1" name="education1" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="8">
+                <hr />
+              </td>
+            </tr>
+            <tr>
+              <td>HSC Result</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group education2">
+                  <label for="education2">Education</label>
+                  <select name="education2" id="education2">
+                    <option value="">Select Your Qalificaion</option>
+                    <option value="class10" name="education2">Class 10</option>
+                    <option value="class12" name="education2">Class 12</option>
+                    <option value="be" name="education2">B.tech</option>
+                    <option value="me" name="education2">M.tech</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div class="form-group passingyear2">
+                  <label for="passingyear2">Passing Year</label>
+                  <input type="text" id="passingyear2" name="education2" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group percentage2">
+                  <label for="percentage2">Percentage</label>
+                  <input type="text" id="percentage2" name="education2" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="8">
+                <hr />
+              </td>
+            </tr>
+            <tr>
+              <td>Bachlor Degree</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group education3">
+                  <label for="education3">Education</label>
+                  <select name="education3" id="education3">
+                    <option value="">Select Your Qalificaion</option>
+                    <option value="class10" name="education3">Class 10</option>
+                    <option value="class12" name="education3">Class 12</option>
+                    <option value="be" name="education3">B.tech</option>
+                    <option value="me" name="education3">M.tech</option>
+                  </select>
+                </div>
+              </td>
+
+              <td>
+                <div class="form-group passingyear3">
+                  <label for="passingyear3">Passing Year</label>
+                  <input type="text" id="passingyear3" name="education3" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group percentage3">
+                  <label for="percentage3">Percentage</label>
+                  <input type="text" id="percentage3" name="education3" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="8">
+                <hr />
+              </td>
+            </tr>
+
+            <tr>
+              <td>Master Degree</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group education4">
+                  <label for="education4">Education</label>
+                  <select name="education4" id="education4">
+                    <option value="">Select Your Qalificaion</option>
+                    <option value="class10" name="education4">Class 10</option>
+                    <option value="class12" name="education4">Class 12</option>
+                    <option value="be" name="education4">B.tech</option>
+                    <option value="me" name="education4">M.tech</option>
+                  </select>
+                </div>
+              </td>
+
+              <td>
+                <div class="form-group passingyear4">
+                  <label for="passingyear4">Passing Year</label>
+                  <input type="text" id="passingyear4" name="education4" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group percentage4">
+                  <label for="percentage4">Percentage</label>
+                  <input type="text" id="percentage4" name="education4" />
+                </div>
+              </td>
+            </tr>
+          </table>
+        </fieldset>
+        <fieldset
+          style="border-width: 5px; width: fit-content"
+          class="form-section"
+        >
+          <legend>Work Experinece</legend>
+          <table cellSpacing="20">
+            <tr>
+              <td>
+                <div class="form-group companyName1">
+                  <label for="companyName1">Company</label>
+                  <input type="text" id="companyName1" name="companyName1" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group designation1">
+                  <label for="designation1">Designation</label>
+                  <input type="text" id="designation1" name="companyName1" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group fromDate1">
+                  <label for="fromDate1">From</label>
+                  <input type="text" id="fromDate1" name="companyName1" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group toDate1">
+                  <label for="toDate1">To</label>
+                  <input type="text" id="toDate1" name="companyName1" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group companyName2">
+                  <label for="companyName2">Company</label>
+                  <input type="text" id="companyName2" name="companyName2" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group designation2">
+                  <label for="designation2">Designation</label>
+                  <input type="text" id="designation2" name="companyName2" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group fromDate2">
+                  <label for="fromDate2">From</label>
+                  <input type="text" id="fromDate2" name="companyName2" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group toDate2">
+                  <label for="toDate2">To</label>
+                  <input type="text" id="toDate2" name="companyName2" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group companyName3">
+                  <label for="companyName3">Company</label>
+                  <input type="text" id="companyName3" name="companyName3" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group designation3">
+                  <label for="designation3">Designation</label>
+                  <input type="text" id="designation3" name="companyName3" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group fromDate3">
+                  <label for="fromDate3">From</label>
+                  <input type="text" id="fromDate3" name="companyName3" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group toDate3">
+                  <label for="toDate3">To</label>
+                  <input type="text" id="toDate3" name="companyName3" />
+                </div>
+              </td>
+            </tr>
+          </table>
+        </fieldset>
+        <fieldset
+          style="border-width: 2px; width: fit-content"
+          class="form-section"
+        >
+          <legend>Language Known</legend>
+          <table cellSpacing="20">
+            <tr>
+              <td>
+                <label for="Language1">Hindi</label>
+                <input
+                  type="checkbox"
+                  id="Language1"
+                  name="Language1"
+                  value="Hindi"
+                />
+              </td>
+              <div class="ability1">
+                <td>
+                  <label for="abilityH1">Read</label>
+                  <input
+                    type="checkbox"
+                    name="ability1[]"
+                    id="abilityH1"
+                    value="Read"
+                  />
+                </td>
+                <td>
+                  <label for="abilityH2">Write</label>
+                  <input
+                    type="checkbox"
+                    name="ability1[]"
+                    id="abilityH2"
+                    value="Write"
+                  />
+                </td>
+                <td>
+                  <label for="abilityH3">Speak</label>
+                  <input
+                    type="checkbox"
+                    name="ability1[]"
+                    id="abilityH3"
+                    value="Speak"
+                  />
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <td>
+                <label for="Language2">English</label>
+                <input
+                  type="checkbox"
+                  id="Language2"
+                  name="Language2"
+                  value="English"
+                />
+              </td>
+              <div class="ability2">
+                <td>
+                  <label for="abilityE1">Read</label>
+                  <input
+                    type="checkbox"
+                    name="ability2[]"
+                    id="abilityE1"
+                    value="Read"
+                  />
+                </td>
+                <td>
+                  <label for="abilityE2">Write</label>
+                  <input
+                    type="checkbox"
+                    name="ability2[]"
+                    id="abilityE2"
+                    value="Write"
+                  />
+                </td>
+                <td>
+                  <label for="abilityE3">Speak</label>
+                  <input
+                    type="checkbox"
+                    name="ability2[]"
+                    id="abilityE3"
+                    value="Speak"
+                  />
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <td>
+                <label for="Language3">Gujarati</label>
+                <input
+                  type="checkbox"
+                  id="Language3"
+                  name="Language3"
+                  value="Gujarati"
+                />
+              </td>
+              <div class="ability3">
+                <td>
+                  <label for="abilityG1">Read</label>
+                  <input
+                    type="checkbox"
+                    name="ability3[]"
+                    id="abilityG1"
+                    value="Read"
+                  />
+                </td>
+                <td>
+                  <label for="abilityG2">Write</label>
+                  <input
+                    type="checkbox"
+                    name="ability3[]"
+                    id="abilityG2"
+                    value="Write"
+                  />
+                </td>
+                <td>
+                  <label for="abilityG3">Speak</label>
+                  <input
+                    type="checkbox"
+                    name="ability3[]"
+                    id="abilityG3"
+                    value="Speak"
+                  />
+                </td>
+              </div>
+            </tr>
+          </table>
+        </fieldset>
+        <fieldset
+          style="border-width: 2px; width: fit-content"
+          class="form-section"
+        >
+          <legend>Technology Known</legend>
+          <table cellSpacing="20">
+            <tr>
+              <td>
+                <label for="technology1">PHP</label>
+                <input
+                  type="checkbox"
+                  name="technology1"
+                  id="technology1"
+                  value="php"
+                />
+              </td>
+              <div class="level1">
+                <td>
+                  <input
+                    type="radio"
+                    name="level1[]"
+                    id="level11"
+                    value="beginer"
+                  />
+                  <label for="level11">Beginer</label>
+                </td>
+                <td>
+                  <input
+                    type="radio"
+                    name="level1[]"
+                    id="level12"
+                    value="mediator"
+                  />
+                  <label for="level12">Mediator</label>
+                </td>
+                <td>
+                  <input
+                    type="radio"
+                    name="level1[]"
+                    id="level13"
+                    value="expert"
+                  />
+                  <label for="level13">Expert</label>
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <td>
+                <label for="technology2">MySql</label>
+                <input
+                  type="checkbox"
+                  name="technology2"
+                  id="technology2"
+                  value="mysql"
+                />
+              </td>
+              <div class="level2">
+                <td>
+                  <input
+                    type="radio"
+                    name="level2[]"
+                    id="level21"
+                    value="beginer"
+                  />
+                  <label for="level21">Beginer</label>
+                </td>
+                <td>
+                  <input
+                    type="radio"
+                    name="level2[]"
+                    id="level22"
+                    value="mediator"
+                  />
+                  <label for="level22">Mediator</label>
+                </td>
+                <td>
+                  <input
+                    type="radio"
+                    name="level2[]"
+                    id="level23"
+                    value="expert"
+                  />
+                  <label for="level23">Expert</label>
+                </td>
+              </div>
+            </tr>
+
+            <tr>
+              <td>
+                <label for="technology3">Oracle</label>
+                <input
+                  type="checkbox"
+                  name="technology3"
+                  id="technology3"
+                  value="oracle"
+                />
+              </td>
+              <div class="level3">
+                <td>
+                  <input
+                    type="radio"
+                    name="level3[]"
+                    id="level31"
+                    value="beginer"
+                  />
+                  <label for="level31">Beginer</label>
+                </td>
+                <td>
+                  <input
+                    type="radio"
+                    name="level3[]"
+                    id="level32"
+                    value="mediator"
+                  />
+                  <label for="level32">Mediator</label>
+                </td>
+                <td>
+                  <input
+                    type="radio"
+                    name="level3[]"
+                    id="level33"
+                    value="expert"
+                  />
+                  <label for="level33">Expert</label>
+                </td>
+              </div>
+            </tr>
+          </table>
+        </fieldset>
+        <fieldset
+          style="border-width: 2px; width: fit-content"
+          class="form-section"
+        >
+          <legend>Refrence Contact</legend>
+          <table cellspacing="20">
+            <tr>
+              <td>
+                <div class="form-group person1">
+                  <label for="person1">Name</label>
+                  <input type="text" id="person1" name="person1" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group contactNumber1">
+                  <label for="contactNumber1">Contact</label>
+                  <input type="text" id="contactNumber1" name="person1" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group relation1">
+                  <label for="relation1">Relation</label>
+                  <input type="text" id="relation1" name="person1" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group person2">
+                  <label for="person2">Name</label>
+                  <input type="text" id="person2" name="person2" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group contactNumber2">
+                  <label for="contactNumber2">Contact</label>
+                  <input type="text" id="contactNumber2" name="person2" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group relation2">
+                  <label for="relation2">Relation</label>
+                  <input type="text" id="relation2" name="person2" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group person3">
+                  <label for="person3">Name</label>
+                  <input type="text" id="person3" name="person3" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group contactNumber3">
+                  <label for="contactNumber3">Contact</label>
+                  <input type="text" id="contactNumber3" name="person3" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group relation3">
+                  <label for="relation3">Relation</label>
+                  <input type="text" id="relation3" name="person3" />
+                </div>
+              </td>
+            </tr>
+          </table>
+        </fieldset>
+        <fieldset
+          style="border-width: 5px; width: fit-content"
+          class="form-section"
+        >
+          <legend>Prefrences</legend>
+          <table cellSpacing="20">
+            <tr>
+              <td rowspan="3">
+                <div class="form-group location">
+                  <label for="location">Prefered Location</label>
+                  <select name="location" id="location">
+                    <option value="">Select Your Location</option>
+                    <option value="Ahmedabad" name="location">Ahmedabad</option>
+                    <option value="Baroda" name="location">Baroda</option>
+                    <option value="Surat" name="location">Surat</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div class="form-group noticePeriod">
+                  <label for="noticePeriod">Notice Period</label>
+                  <input type="text" id="noticePeriod" name="noticePeriod" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group expectedCtc">
+                  <label for="expectedCtc">Expected CTC</label>
+                  <input type="text" id="expectedCtc" name="expectedCtc" />
+                </div>
+              </td>
+              <td>
+                <div class="form-group currentCtc">
+                  <label for="currentCtc">Current CTC</label>
+                  <input type="text" id="currentCtc" name="currentCtc" />
+                </div>
+              </td>
+
+              <td rowspan="3">
+                <div class="form-group department">
+                  <label for="department">Prefered Department</label>
+                  <select name="department" id="department">
+                    <option value="">Select Your Department</option>
+                    <option value="hr" name="department">HR</option>
+                    <option value="development" name="department">
+                      Development
+                    </option>
+                    <option value="bde" name="department">BDE</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <input
+            type="button"
+            value="submit"
+            id="submitbtn"
+            onclick="submitData()"
+          />
+          <input
+            type="button"
+            value="update"
+            id="updatebtn"
+            onclick="updateData()"
+          />
+        </fieldset>
+      </form>
+      <nav aria-label="...">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" tabindex="-1" id="previous">Previous</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" id="next">Next</a>
+          </li>
+        </ul>
+      </nav>
+    </main>
+
+    <script src="/js/job_application_form.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
