@@ -125,7 +125,7 @@
           "relationshipStatus",
           "state",
           "zipcode",
-          "address",
+          "address1",
           "birthday",
         ];
         basicdetails.forEach((element) => {
@@ -436,7 +436,12 @@
           } else if (prop == "birthday") {
             var date = result[prop].split("T")
             document.getElementById("birthday").value = date[0];
-          } 
+          } else if(prop == "address1"){
+            document.getElementById("address1").innerText = result[prop];
+          }
+          else if(prop == "address2" && result[prop]!=null){
+            document.getElementById("address2").innerText = result[prop];
+          }
           else {
             document.getElementById(prop).setAttribute("value", result[prop]);
           }

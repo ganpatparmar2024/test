@@ -115,23 +115,51 @@ function id(list) {
   
             break;
           case "^":
-            sql =   sql+"and" + name(data["^"]);
+            if (k==1) {
+              sql =   sql + name(data["^"]);
+            } else {
+              sql =   sql+  "and" + name(data["^"]);
+            }
+            
   
             break;
           case "$":
-            sql =   sql+"and" + gender(data["$"]);
+            if (k==1) {
+              sql =   sql + gender(data["$"]);
+            } else {
+              sql =   sql+ "and" + gender(data["$"]);
+            }
+            
   
             break;
           case "}":
-            sql =   sql+"and" + caste(data["}"]);
+            if (k==1) {
+            sql =   sql + caste(data["}"]);
+
+            } else {
+            sql =   sql+ "and" + caste(data["}"]);
+              
+            }
   
             break;
           case "{":
-            sql =   sql+"and" + contactNo(data["{"]);
+            if (k==1) {
+            sql =   sql + contactNo(data["{"]);
+              
+            } else {
+            sql =   sql+ "and" + contactNo(data["{"]);
+              
+            }
   
             break;
           case ":":
-            sql =   sql+"and" + fathersName(data[":"]);
+            if (k==1) {
+              sql =   sql + fathersName(data[":"]);
+
+            } else {
+            sql =   sql+ "and" + fathersName(data[":"]);
+              
+            }
   
           default:
             break;
@@ -139,8 +167,14 @@ function id(list) {
       }
     }
     if (k == 1) {
+      console.log(sql);
       sql = sql.split("and");
-      return sql[0];
+      if (sql[1]!=undefined) {
+        return sql[0]+sql[1];
+      } else {
+        return sql[0]
+      }
+      
     }
     return sql;
   }
@@ -183,13 +217,16 @@ export const renderdelimeterSearch =  (req, res) => {
     console.log(sqt());
   
     con.query(sqt(), (err, results, fields) => {
-      console.log(results);
+      // console.log(results);
       if (err) {
         res.send("Enter a valid Input");
       } else if (results.length <= 0) {
-        res.send("Enter a valid Input");
+        res.send("such data does not present in our database");
+      }
+      else{
+        res.render("delimeter_search.ejs", { results: results, fields: fields });
       }
   
-      res.render("delimeter_search.ejs", { results: results, fields: fields });
+      
     });
   }

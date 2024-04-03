@@ -25,7 +25,7 @@ export const submitData = (req, res) => {
   
     const queryPromise1 = () => {
       return new Promise((resolve, reject) => {
-        var sql = `insert into BasicDetails (name, lastName, designation, email, city, state, contactNo, gender, birthday, relationshipStatus, zipcode) values(?,?,?,?,?,?,?,?,?,?,?)`;
+        var sql = `insert into BasicDetails (name, lastName, designation, email, city, state, contactNo, gender, birthday, relationshipStatus, zipcode,address1,address2) values(?,?,?,?,?,?,?,?,?,?,?,?,?)`;
         var basic = [
           data.name[0],
           data.lastName[0],
@@ -38,6 +38,8 @@ export const submitData = (req, res) => {
           data.birthday[0],
           data.relationshipStatus[0],
           data.zipcode[0],
+          data.address1[0],
+          data.address2[0]
         ];
         con.query(sql, basic, (error, results) => {
           if (error) {
@@ -176,7 +178,7 @@ export const getData = (req, res) => {
   
     const basicDetail = () => {
       var sql =
-        "select  name, lastName, designation, email, city, state, contactNo, gender, birthday, relationshipStatus, zipcode from BasicDetails where id =?;";
+        "select  name, lastName, designation, email, city, state, contactNo, gender, birthday, relationshipStatus, zipcode,address1,address2 from BasicDetails where id =?;";
       return new Promise((resolve, reject) => {
         con.query(sql, [id], (error, result, field) => {
           if (error) {
@@ -336,6 +338,7 @@ export const updateData =(req,res)=>{
         if (error) {
           return reject(error);
         }
+        console.log("basic details updated");
         return resolve(true);
       });
     });
@@ -357,7 +360,8 @@ export const updateData =(req,res)=>{
     try {
       const basicdetails = await BasicDetails()
       const empid = await getId()
-      console.log(empid[0][0].id);
+      // console.log(empid);
+      // console.log(empid[0][0].id);
       let i = 0
       // update education data
       education.forEach((ele) => {
@@ -397,34 +401,40 @@ export const updateData =(req,res)=>{
       // update language data to the database
       var lang = chekbox(language, ability);
       for (let i = 0; i < lang.length; i++) {
-        con.query(
-          `update  Language set name = ?, reading = ?, writing = ?, speaking =? where empid = ? and id = ?;`,
-          [lang[i][0], lang[i][1], lang[i][2], lang[i][3],req.body.id,empid[2][i].id],
-          (err, result) => {
-            if (err) {
-              console.log(err);
+        if (empid[2][i]!=null) {
+          con.query(
+            `update  Language set name = ?, reading = ?, writing = ?, speaking =? where empid = ? and id = ?;`,
+            [lang[i][0], lang[i][1], lang[i][2], lang[i][3],req.body.id,empid[2][i].id],
+            (err, result) => {
+              if (err) {
+                console.log(err);
+              }
+              else{
+                console.log("lang data updated");
+              }
             }
-            else{
-              console.log("lang data updated");
-            }
-          }
-        );
+          );
+        }
+        
       }
 
       // updating technology data
        i = 0;
       technology.forEach((ele) => {
         if (ele != undefined) {
-          con.query(
-            `update Technology set name = ?, level =? where fkEmp = ? and id = ?;`,[ele,level[i],req.body.id,empid[3][i].id],(err,result) =>{
-              if (err) {
-                console.log(err);
+          if (empid[3][i].id!=undefined) {
+            con.query(
+              `update Technology set name = ?, level =? where fkEmp = ? and id = ?;`,[ele,level[i],req.body.id,empid[3][i].id],(err,result) =>{
+                if (err) {
+                  console.log(err);
+                }
+                else{
+                  console.log("tech data updated");
+                }
               }
-              else{
-                console.log("tech data updated");
-              }
-            }
-          );
+            );
+          }
+          
         }
         i++;
       });
@@ -432,7 +442,7 @@ export const updateData =(req,res)=>{
       // updating refrences contact data
       i = 0
       refrences.forEach((ele) => {
-        if (ele[0] != "") {
+        if (ele[0] != "" && empid[4][i]!=null) {
           con.query(
             `update  RefrenceContact set  person = ?, contactNumber =?, relation =? where fkEmp = ? and id = ?;`,
             [ele[0], ele[1], ele[2],req.body.id,empid[4][i].id],
@@ -451,25 +461,27 @@ export const updateData =(req,res)=>{
 
       // updating prefrences data
       var prefrences1 = prefrences.map((x) => (x == "" ? (x = null) : (x = x)));
-
-      con.query(
-        `update  Prefrences  set  location = ?, department =?, noticePeriod =?, currentCtc =?, expectedCtc =? where fkEmp = ? and id = ?;`,
-        [
-          prefrences1[0],
-          prefrences1[1],
-          prefrences1[2],
-          prefrences1[3],
-          prefrences1[4],
-          req.body.id,empid[5][0].id
-        ],
-        (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log("prefrences inserted properly");
+      if (empid[5][0]!=null) {
+        con.query(
+          `update  Prefrences  set  location = ?, department =?, noticePeriod =?, currentCtc =?, expectedCtc =? where fkEmp = ? and id = ?;`,
+          [
+            prefrences1[0],
+            prefrences1[1],
+            prefrences1[2],
+            prefrences1[3],
+            prefrences1[4],
+            req.body.id,empid[5][0].id
+          ],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log("prefrences inserted properly");
+            }
           }
-        }
-      );
+        );
+      }
+      
       
     } catch (error) {
       console.log(error);

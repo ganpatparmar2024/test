@@ -1,61 +1,45 @@
-async function submitData() {
-    const data = test();
-  
-    try {
-      let response = await fetch("/login", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(data),
-        redirect: "follow",
-      });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+  function checkInputs(element) {
+    var eClass = "." + element;
+    var eid = "#" + element;
+    var name = document.querySelector(eid);
+    if (name.value == "") {
+      if (document.getElementById("span" + element) == null) {
+        createDiv(element);
       }
-      // response = await response.json();
-      // console.log(response[0].statusCode);
-  
-      // if (response[0].statusCode == 404) {
-      //   alert("user Could not found");
-      //   //   window.location.replace("http://localhost:3000/register");
-      // }
-  
-      // if (response[0].statusCode == 200) {
-      //   alert("you have successfully login urself");
-      //     window.location.replace("http://localhost:3000/secrets");
-      // }
-  
-      // if (response[0].statusCode == 401) {
-      //   alert("Your credentials are wrong");
-      // }
-  
-      // if (response.redirected) {
-      //   window.location.replace("http://localhost:3000/secrets");
-      //   return;
-      // }
-    } catch (error) {
-      console.log(error);
+
+      return false;
+    } else {
+      if (document.getElementById("span" + element) != null) {
+        removeDiv(eClass);
+      }
+      return true;
     }
   }
-  
-  function test() {
-    const form = document.getElementById("form");
-    const submitter = document.querySelector("#submitbtn");
-    const formData = new FormData(form);
-    const searilizedata = {};
-  
-    searilizedata["username"] = document.getElementById("username").value
-    searilizedata["password"] = document.getElementById("password").value
-    // console.log(searilizedata);
-    // for (const [key, value] of formData.entries()) {
-    //   const fieldname = key.replace("[]", "");
-    //   if (!searilizedata[fieldname]) {
-    //     searilizedata[fieldname] = [];
-    //   }
-    //   searilizedata[fieldname].push(value);
-    // }
-    return searilizedata;
+
+  function createDiv(element) {
+    var eClass = "." + element;
+    var eid = "#" + element;
+    var name = document.querySelector(eid);
+    var div = document.createElement("span");
+    var text = document.createTextNode("Please provide a valid " + element);
+    div.appendChild(text);
+    div.style.color = "red";
+    div.setAttribute("id", "span" + element);
+
+    document.querySelector(eClass).appendChild(div);
   }
-  
+  // function to remove an element
+  function removeDiv(eClass) {
+    var element = document.querySelector(eClass);
+    element.removeChild(element.lastChild);
+  }
+  var form = document.getElementById("form")
+  form.addEventListener('submit', function (event) {
+    if ((checkInputs("username") == false) || (checkInputs("password") == false)) {      
+      event.preventDefault()
+      event.stopPropagation()      
+      return
+    }
+    
+    form.classList.add('was-validated')
+  }, false)
