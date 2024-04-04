@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+<title>List of Employees</title>
+</head>
+<body>
+    <main>
+        <h1 class="text-center fs-1 text-capitalize text-danger">List Of Employees</h1>
+        <% if(locals.result){ %>
+            <table class="table table-striped table-bordered text-center ">
+                <thead class="bg-info">
+                  <tr>
+                    <% Object.keys(result[0]).forEach(field => { %>
+                        <th scope="col"><%= field %></th>
+                    <% }) %>              
+                  <th scope="col">Update</th>  
+                  </tr>
+                  <%result.forEach(ele=>{%>
+                    <tr>
+                        <% Object.values(ele).forEach(data=>{ %>
+                            <td><%= data %></td>
+                            <% }) %>
+                            <td><a class="text-danger" href="http://localhost:3000/api/jobapplication/update?id=<%= Object.values(ele)[0] %>">update</a></td>
+                    </tr>
+                    
+                  <% }) %>
+                  
+                </thead>
+                </table>
+       <% } %>
+    </main>
+    <%- include('partials/footer') %>
+

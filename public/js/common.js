@@ -116,7 +116,7 @@ function getRandomCode() {
         g.push(0);
       }
     }
-    return [e, h, g];
+    return [h, e, g];
   }
 console.log(getRandomCode());
 export{getRandomCode}
