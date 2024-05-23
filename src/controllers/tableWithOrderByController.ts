@@ -3,16 +3,12 @@ import { con } from "../config/config";
 import { MysqlError } from "mysql";
 import { QueryResult,FieldPacket } from "mysql2";
 import { error } from "console";
-interface all{
-page:string;
-order:string;
-field:string;
-}
+import { all } from "../custom/custom";
 export const renderTableData = async (req:Request<{},{},{},all>, res:Response) => {
   var { limit } = req.Pagination;
-  var pid = req.query.page || '1';
-  var order = req.query.order || 'asc';
-  var field = req.query.field || 'id';
+  var pid:string = req.query.page || '1';
+  var order:string = req.query.order || 'asc';
+  var field:string = req.query.field || 'id';
 
   const { startIndex, endIndex } = req.Pagination;
   

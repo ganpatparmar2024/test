@@ -2,7 +2,8 @@ import Jwt from "jsonwebtoken";
 import bcrypt from "bcrypt"
 import { select } from "../Services/registerService";
 import { Request,Response } from "express";
- interface TypedRequestBody<T> extends Express.Request {
+import { RowDataPacket } from "mysql2";
+ interface TypedRequestBody<T> extends Request {
   body: T
 }
 const login = async (req:TypedRequestBody<{ username: string, password: string }>, res:Response) => {
@@ -10,7 +11,7 @@ const login = async (req:TypedRequestBody<{ username: string, password: string }
     
       const { username, password } = req.body; 
       
-      const result = await select("select * from users where email =?", [
+      const result:RowDataPacket = await select("select * from users where email =?", [
         username,
       ]);
       
@@ -22,14 +23,14 @@ const login = async (req:TypedRequestBody<{ username: string, password: string }
                 console.log("compare error",err);
                 return 
               }
-              console.log(result);
+              // console.log(result);
               var username = result.email
-              console.log(username);
+              // console.log(username);
               if (results) {
                 console.log("verified User");
-                var payload = username
+                var payload:string = username
                 console.log(payload);
-                const token = Jwt.sign({payload}, "secret", {
+                const token:string = Jwt.sign({payload}, "secret", {
                   expiresIn: "10m",
                 });
                 res.cookie('jwt',token)

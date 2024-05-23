@@ -10,8 +10,8 @@ interface PageId{
  export const  getSubmit = (req:Request<{},{},{},PageId>, res:Response) => {
     const { startIndex } = req.Pagination;
 
-    var pid = req.query.page||1;
-    var query;
+    var pid:(number|string) = req.query.page||1;
+    var query:string;
     
     query = q + ` limit ${startIndex},${10};`;
   
@@ -25,7 +25,7 @@ interface PageId{
   
 export const postsubmit =  (req:Request<{},{},{},PageId>, res:Response) => {
     const { startIndex } = req.Pagination;
-    var pid = req.query.page || '1';
+    var pid:(number|string) = req.query.page || '1';
     
     var query:string= req.body as string;
     q = query;

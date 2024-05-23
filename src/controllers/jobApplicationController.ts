@@ -3,25 +3,33 @@ import { select } from "../Services/registerService";
 import { con } from "../config/config";
 import { chekbox } from "../common";
 import moment from "moment";
-// import { RowDataPacket } from "mysql2";
-import mysql, { QueryResult } from "mysql2/promise";
-
-export const submitData = (req: Request, res: Response) => {
-  var data = req.body;
+import mysql, { QueryResult, RowDataPacket } from "mysql2/promise";
+import { BasicDetails, FormData } from "../custom/custom";
+import { MysqlError } from "mysql";
+export const submitData = (req: Request, res: Response):void => {
+  var data: FormData = req.body;
   console.log(data);
-  var education = [
+  var education: string[][] = [
     data.education1,
     data.education2,
     data.education3,
     data.education4,
   ];
-  var company = [data.companyName1, data.companyName2, data.companyName3];
-  var refrences = [data.person1, data.person2, data.person3];
-  var language = [data.Language1, data.Language2, data.Language3];
-  var ability = [data.ability1, data.ability2, data.ability3];
-  var technology = [data.technology1, data.technology2, data.technology3];
-  var level = [data.level1, data.level2, data.level3];
-  var prefrences = [
+  var company: string[][] = [
+    data.companyName1,
+    data.companyName2,
+    data.companyName3,
+  ];
+  var refrences: string[][] = [data.person1, data.person2, data.person3];
+  var language: string[][] = [data.Language1, data.Language2, data.Language3];
+  var ability: string[][] = [data.ability1, data.ability2, data.ability3];
+  var technology: string[][] = [
+    data.technology1,
+    data.technology2,
+    data.technology3,
+  ];
+  var level: string[][] = [data.level1, data.level2, data.level3];
+  var prefrences: string[][] = [
     data.location,
     data.department,
     data.noticePerid,
@@ -29,9 +37,9 @@ export const submitData = (req: Request, res: Response) => {
     data.expectedCtc,
   ];
 
-  const queryPromise1 = async () => {
-    var sql = `insert into BasicDetails (name, lastName, designation, email, city, state, contactNo, gender, birthday, relationshipStatus, zipcode,address1,address2) values(?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-    var basic = [
+  const queryPromise1 = async ():Promise<number> => {
+    var sql: string = `insert into BasicDetails (name, lastName, designation, email, city, state, contactNo, gender, birthday, relationshipStatus, zipcode,address1,address2) values(?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    var basic: string[] = [
       data.name[0],
       data.lastName[0],
       data.designation[0],
@@ -48,46 +56,46 @@ export const submitData = (req: Request, res: Response) => {
     ];
     try {
       const [result] = await con.query(sql, basic);
-      const insertId = (result as mysql.ResultSetHeader).insertId;
+      const insertId: number = (result as mysql.ResultSetHeader).insertId;
       return insertId;
     } catch (error) {
       console.log("error in executing query", error);
     }
   };
-  const queryPromise2 = (insertid: number | undefined) => {
-    education.forEach((ele) => {
+  const queryPromise2 = (insertid?: number):void => {
+    education.forEach((ele: string[]) => {
       if (ele[0] != "") {
-        var sql = `insert into School(fkEmp, board, passingYear, percentage) values (${insertid},'${ele[0]}','${ele[1]}',${ele[2]});`;
+        var sql: string = `insert into School(fkEmp, board, passingYear, percentage) values (${insertid},'${ele[0]}','${ele[1]}',${ele[2]});`;
         con
           .query(sql)
           .then(() => {
             console.log("education data inserted");
           })
-          .catch((error) => {
+          .catch((error: MysqlError) => {
             throw error;
           });
       }
     });
   };
-  const queryPromise3 = (insertid: number | undefined) => {
-    company.forEach((ele) => {
+  const queryPromise3 = (insertid?: number):void => {
+    company.forEach((ele: string[]) => {
       if (ele[0] != "") {
-        var sql = `insert into WorkExperience(fkEmp, companyName, designation, fromDate, toDate) values (${insertid},'${ele[0]}','${ele[1]}','${ele[2]}','${ele[3]}')`;
+        var sql: string = `insert into WorkExperience(fkEmp, companyName, designation, fromDate, toDate) values (${insertid},'${ele[0]}','${ele[1]}','${ele[2]}','${ele[3]}')`;
         con
           .query(sql)
           .then(() => {
             console.log("Work experinece inserted");
           })
-          .catch((error) => {
+          .catch((error: MysqlError) => {
             throw error;
           });
       }
     });
   };
-  const queryPromise4 = (insertid: number | undefined) => {
-    var lang = chekbox(language, ability);
+  const queryPromise4 = (insertid?: number):void => {
+    var lang: (string | number)[][] = chekbox(language, ability);
     try {
-      for (let i = 0; i < lang.length; i++) {
+      for (let i: number = 0; i < lang.length; i++) {
         con.query(
           `insert into Language(empid, name, reading, writing, speaking) values (${insertid},?,?,?,?);`,
           [lang[i][0], lang[i][1], lang[i][2], lang[i][3]]
@@ -98,9 +106,9 @@ export const submitData = (req: Request, res: Response) => {
       console.log("error in executing language data", error);
     }
   };
-  const queryPromise5 = (insertid: number | undefined) => {
-    let i = 0;
-    technology.forEach((ele) => {
+  const queryPromise5 = (insertid?: number):void => {
+    let i: number = 0;
+    technology.forEach((ele: string[]) => {
       if (ele != undefined) {
         con
           .query(
@@ -109,15 +117,15 @@ export const submitData = (req: Request, res: Response) => {
           .then(() => {
             console.log("tecnology data inserted");
           })
-          .catch((error) => {
+          .catch((error: MysqlError) => {
             throw error;
           });
       }
       i++;
     });
   };
-  const queryPromise6 = (insertid: number | undefined) => {
-    refrences.forEach((ele) => {
+  const queryPromise6 = (insertid?: number):void => {
+    refrences.forEach((ele: string[]) => {
       if (ele[0] != "") {
         try {
           con.query(
@@ -131,8 +139,10 @@ export const submitData = (req: Request, res: Response) => {
       }
     });
   };
-  const queryPromise7 = (insertid: number | undefined) => {
-    var prefrences1 = prefrences.map((x) => (x == "" ? (x = null) : (x = x)));
+  const queryPromise7 = (insertid?: number):void => {
+    var prefrences1: string[][] = prefrences.map((x) =>
+      x.length === 0 ? (x = null) : (x = x)
+    );
     try {
       con.query(
         `insert into Prefrences (fkEmp, location, department, noticePeriod, currentCtc, expectedCtc) values (${insertid},?,?,?,?,?);`,
@@ -149,15 +159,15 @@ export const submitData = (req: Request, res: Response) => {
       console.log("prefrences data not inserted", error);
     }
   };
-  async function sequentialQueries() {
+  async function sequentialQueries(): Promise<void> {
     try {
-      var insertid = await queryPromise1();
-      var edu = queryPromise2(insertid);
-      var work = queryPromise3(insertid);
-      var lang = queryPromise4(insertid);
-      var tech = queryPromise5(insertid);
-      var ref = queryPromise6(insertid);
-      var pref = queryPromise7(insertid);
+      var insertid:number = await queryPromise1();
+      queryPromise2(insertid);
+      queryPromise3(insertid);
+      queryPromise4(insertid);
+      queryPromise5(insertid);
+      queryPromise6(insertid);
+      queryPromise7(insertid);
       // console.log(edu, work, lang, tech, ref, pref);
     } catch (error) {
       console.log(error);
@@ -165,11 +175,11 @@ export const submitData = (req: Request, res: Response) => {
   }
   sequentialQueries();
 };
-export const getData = (req: Request, res: Response) => {
-  var id = req.query.id;
+export const getData = (req: Request, res: Response):void => {
+  var id: string = req.query.id as string;
 
-  const basicDetail = async () => {
-    var sql =
+  const basicDetail:() => Promise<QueryResult> = async ():Promise<QueryResult> => {
+    var sql: string =
       "select  name, lastName, designation, email, city, state, contactNo, gender, birthday, relationshipStatus, zipcode,address1,address2 from BasicDetails where id =?;";
     try {
       const [result] = await con.query(sql, [id]);
@@ -178,8 +188,8 @@ export const getData = (req: Request, res: Response) => {
       console.log("error in getting basic details", error);
     }
   };
-  const educationDetails = async () => {
-    var sql =
+  const educationDetails:() => Promise<QueryResult> = async ():Promise<QueryResult> => {
+    var sql: string =
       "select board, passingYear, percentage from School where fkEmp =?;";
     try {
       const [result] = await con.query(sql, [id]);
@@ -188,8 +198,8 @@ export const getData = (req: Request, res: Response) => {
       console.log("error in selecting education details", error);
     }
   };
-  const workExperienceDetails = async () => {
-    var sql =
+  const workExperienceDetails :() => Promise<QueryResult> = async ():Promise<QueryResult> => {
+    var sql: string =
       "select companyName, designation, fromDate, toDate from WorkExperience where fkEmp =?;";
     try {
       var [result] = await con.query(sql, [id]);
@@ -198,8 +208,8 @@ export const getData = (req: Request, res: Response) => {
       console.log("error in getting work experience ", error);
     }
   };
-  const languageKnown = async () => {
-    var sql =
+  const languageKnown:() => Promise<QueryResult> = async ():Promise<QueryResult> => {
+    var sql: string =
       "select name, reading, writing, speaking from Language where empid =?;";
     try {
       var [result] = await con.query(sql, [id]);
@@ -208,8 +218,8 @@ export const getData = (req: Request, res: Response) => {
       console.log("error in getting language known");
     }
   };
-  const technologyKnown = async () => {
-    var sql = "select name, level from Technology where fkEmp =?;";
+  const technologyKnown:() => Promise<QueryResult> = async ():Promise<QueryResult> => {
+    var sql: string = "select name, level from Technology where fkEmp =?;";
 
     try {
       var [result] = await con.query(sql, [id]);
@@ -218,8 +228,8 @@ export const getData = (req: Request, res: Response) => {
       console.log("error in getting technology known");
     }
   };
-  const refrences = async () => {
-    var sql =
+  const refrences:() => Promise<QueryResult> = async ():Promise<QueryResult> => {
+    var sql: string =
       "select person, contactNumber, relation from RefrenceContact where fkEmp =?;";
     try {
       var [result] = await con.query(sql, [id]);
@@ -228,8 +238,8 @@ export const getData = (req: Request, res: Response) => {
       console.log("error in getting refrences", error);
     }
   };
-  const prefrences = async () => {
-    var sql =
+  const prefrences:() => Promise<QueryResult> = async ():Promise<QueryResult> => {
+    var sql: string =
       "select location, department, noticePeriod, currentCtc, expectedCtc from Prefrences where fkEmp =?;";
     try {
       var [result] = await con.query(sql, [id]);
@@ -238,15 +248,15 @@ export const getData = (req: Request, res: Response) => {
       console.log("error in getting prefrences details", error);
     }
   };
-  async function sequentialQueries() {
+  async function sequentialQueries():Promise<void> {
     try {
-      var basicdetails = await basicDetail();
-      var educationdetails = await educationDetails();
-      var workexpdetails = await workExperienceDetails();
-      var languageknown = await languageKnown();
-      var technologknown = await technologyKnown();
-      var refrencesdetails = await refrences();
-      var prefrencesdetails = await prefrences();
+      const basicdetails: QueryResult = await basicDetail();
+      const educationdetails: QueryResult = await educationDetails();
+      const workexpdetails: QueryResult = await workExperienceDetails();
+      const languageknown: QueryResult = await languageKnown();
+      const technologknown: QueryResult = await technologyKnown();
+      const refrencesdetails: QueryResult = await refrences();
+      const prefrencesdetails: QueryResult = await prefrences();
       // console.log(basicdetails,educationdetails,workexpdetails,languageknown,technologknown,refrencesdetails,prefrencesdetails);
 
       // let date = moment(basicdetails[0][0].dob).utc().format("YYYY-MM-DD");
@@ -269,15 +279,15 @@ export const getData = (req: Request, res: Response) => {
   sequentialQueries();
 };
 
-export const renderUpdate = (req: Request, res: Response) => {
+export const renderUpdate = (req: Request, res: Response):void => {
   res.render("job_Application_Form.ejs");
 };
 
-export const updateData = (req: Request, res: Response) => {
-  var data = req.body.data;
+export const updateData = (req: Request, res: Response):void => {
+  var data: FormData = req.body.data;
   // console.log(req.query);
   console.log(data);
-  var basic = [
+  var basic: string[] = [
     data.name,
     data.lastName,
     data.designation,
@@ -292,27 +302,35 @@ export const updateData = (req: Request, res: Response) => {
     req.body.id,
   ];
   console.log(basic);
-  var education = [
+  var education: string[][] = [
     data.education1,
     data.education2,
     data.education3,
     data.education4,
   ];
-  var company = [data.companyName1, data.companyName2, data.companyName3];
-  var refrences = [data.person1, data.person2, data.person3];
-  var language = [data.Language1, data.Language2, data.Language3];
-  var ability = [data.ability1, data.ability2, data.ability3];
-  var technology = [data.technology1, data.technology2, data.technology3];
-  var level = [data.level1, data.level2, data.level3];
-  var prefrences = [
+  var company: string[][] = [
+    data.companyName1,
+    data.companyName2,
+    data.companyName3,
+  ];
+  var refrences: string[][] = [data.person1, data.person2, data.person3];
+  var language: string[][] = [data.Language1, data.Language2, data.Language3];
+  var ability: string[][] = [data.ability1, data.ability2, data.ability3];
+  var technology: string[][] = [
+    data.technology1,
+    data.technology2,
+    data.technology3,
+  ];
+  var level: string[][] = [data.level1, data.level2, data.level3];
+  var prefrences: string[][] = [
     data.location,
     data.department,
     data.noticePerid,
     data.currentCtc,
     data.expectedCtc,
   ];
-  const BasicDetails = async () => {
-    var sql = `update BasicDetails set name=?, lastName=?, designation=?, email=?, city=?,state=?, contactNo=?, gender=?, birthday=?, relationshipStatus=?, zipcode=? where id = ?;`;
+  const BasicDetails:() => Promise<void> = async () => {
+    var sql: string = `update BasicDetails set name=?, lastName=?, designation=?, email=?, city=?,state=?, contactNo=?, gender=?, birthday=?, relationshipStatus=?, zipcode=? where id = ?;`;
     try {
       await con.query(sql, basic);
       console.log("basic details updated");
@@ -321,8 +339,8 @@ export const updateData = (req: Request, res: Response) => {
     }
   };
 
-  const getId = async () => {
-    var sql1 = `select id from School where fkEmp = ${req.body.id};
+  const getId:() => Promise<QueryResult> = async () => {
+    var sql1: string = `select id from School where fkEmp = ${req.body.id};
     select id from WorkExperience where fkEmp = ${req.body.id};
     select id from Language where empid = ${req.body.id};select id from Technology where fkEmp = ${req.body.id};
     select id from RefrenceContact where fkEmp = ${req.body.id};select id from Prefrences where fkEmp = ${req.body.id};`;
@@ -335,35 +353,33 @@ export const updateData = (req: Request, res: Response) => {
     }
   };
 
-  async function sequentialQueries() {
+  async function sequentialQueries():Promise<void> {
     try {
-      const basicdetails = await BasicDetails();
+      await BasicDetails();
       interface ItemId {
         id: number;
       }
-      const empid: Array<Array<ItemId>> = (await getId()) as Array<
-        Array<ItemId>
-      >;
+      const empid: Array<Array<ItemId>> = (await getId()) as Array<Array<ItemId>>;
 
       // console.log(empid);
       // console.log(empid[0][0].id);
       let i = 0;
       // update education data
-      education.forEach(async (ele) => {
+      education.forEach(async (ele:string[]) => {
         if (ele[0] != "") {
-          var temp = empid[0][i];
-          if (temp == undefined) {
-            var sql =
+         
+          if (empid[0][i] == undefined) {
+            var sql:string =
               "insert into School (fkEmp,board,passingYear,percentage) values(?,?,?,?)";
-            var school = [req.body.id, ele[0], ele[1], ele[2]];
+            var school:string[] = [req.body.id, ele[0], ele[1], ele[2]];
             try {
               await con.query(sql, school);
             } catch (error) {
               console.log("could not able to insert into school table", error);
             }
           } else {
-            var sql = `update School set board = ?, passingYear = ?, percentage = ? where fkEmp = ? and id = ?;`;
-            var school = [ele[0], ele[1], ele[2], req.body.id, empid[0][i].id];
+            var sql:string = `update School set board = ?, passingYear = ?, percentage = ? where fkEmp = ? and id = ?;`;
+            var school:string[] = [ele[0], ele[1], ele[2], req.body.id, empid[0][i].id];
             try {
               await con.query(sql, school);
             } catch (error) {
@@ -376,14 +392,14 @@ export const updateData = (req: Request, res: Response) => {
 
       // update workexperinece data
       i = 0;
-      company.forEach(async (ele) => {
+      company.forEach(async (ele:string[]) => {
         if (ele[0] != "") {
           if (empid[1][i] == undefined) {
-            var sql =
+            var sql:string =
               "insert into WorkExperience (fkEmp, companyName, designation, fromDate, toDate) values (?,?,?,?,?)";
-            var from = moment(ele[2]).utc().format("YYYY-MM-DD");
-            var to = moment(ele[2]).utc().format("YYYY-MM-DD");
-            var company = [req.body.id, ele[0], ele[1], from, to];
+            var from:string = moment(ele[2]).utc().format("YYYY-MM-DD");
+            var to:string = moment(ele[2]).utc().format("YYYY-MM-DD");
+            var company:string[] = [req.body.id, ele[0], ele[1], from, to];
             try {
               await con.query(sql, company);
             } catch (error) {
@@ -393,7 +409,7 @@ export const updateData = (req: Request, res: Response) => {
             var sql = `update WorkExperience set companyName = ?, designation = ?, fromDate = ?, toDate = ? where fkEmp = ? and id = ?;`;
             var from = moment(ele[2]).utc().format("YYYY-MM-DD");
             var to = moment(ele[2]).utc().format("YYYY-MM-DD");
-            var company = [
+            var company:string[] = [
               ele[0],
               ele[1],
               from,
@@ -413,9 +429,9 @@ export const updateData = (req: Request, res: Response) => {
       });
 
       // update language data to the database
-      var lang = chekbox(language, ability);
+      var lang:(string|number)[][] = chekbox(language, ability);
 
-      for (let i = 0; i < lang.length; i++) {
+      for (let i:number = 0; i < lang.length; i++) {
         if (empid[2][i] != undefined) {
           try {
             await con.query(
@@ -447,7 +463,7 @@ export const updateData = (req: Request, res: Response) => {
 
       // updating technology data
       i = 0;
-      technology.forEach(async (ele) => {
+      technology.forEach(async (ele:string[]) => {
         if (ele != undefined) {
           if (empid[3][i] != undefined) {
             try {
@@ -474,7 +490,7 @@ export const updateData = (req: Request, res: Response) => {
 
       // updating refrences contact data
       i = 0;
-      refrences.forEach(async (ele) => {
+      refrences.forEach(async (ele:string[]) => {
         if (ele[0] != "") {
           if (empid[4][i] != null) {
             try {
@@ -500,7 +516,7 @@ export const updateData = (req: Request, res: Response) => {
       });
 
       // updating prefrences data
-      var prefrences1 = prefrences.map((x) => (x == "" ? (x = null) : (x = x)));
+      var prefrences1 = prefrences.map((x) => (x.length === 0 ? (x = null) : (x = x)));
       if (empid[5][0] != null) {
         try {
           con.query(
@@ -547,7 +563,7 @@ export const thanks = (req: Request, res: Response) => {
 };
 
 export const listOfEmployees = async (req: Request, res: Response) => {
-  var result = await select(
+  var result:RowDataPacket = await select(
     "select id as Serial_No, name as Name, lastName as Last_Name, designation as Designation, email as Email, city as City, contactNo as Contact_Number, gender Gender, birthday as Date_Of_Birth, relationshipStatus as Relationship_Status, address1 as Permanent_Address from BasicDetails",
     []
   );

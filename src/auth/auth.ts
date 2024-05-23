@@ -3,9 +3,10 @@ import { select } from "../Services/registerService";
 import { NextFunction, Request, Response, Router } from "express";
 import passport from "passport";
 import { promises } from "dns";
+import { RowDataPacket } from "mysql2";
 
 var cookieExtractor = function (req: Request) {
-  var token = null;
+  var token:string;
   if (req && req.cookies) {
     token = req.cookies["jwt"];
   }
@@ -24,7 +25,7 @@ export const applyPassportStrategy: doneFunction = (passport) => {
     new Strategy(options, async (payload, done) => {
       console.log("iam in stregey");
       console.log(payload.payload);
-      const result = await select(
+      const result:RowDataPacket = await select(
         "select * from users where email =?",
         [payload.payload]
       );

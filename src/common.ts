@@ -24,7 +24,7 @@ function getRandomCode() {
     }
     return rand
 }
- export function chekbox(language:string[], ability:string[]) {
+ export function chekbox(language:string[][], ability:string[][]):(string|number)[][] {
   var hindi:{[key:string]:number }= {}
   var english:{[key:string]:number }= {}
   var gujarati:{[key:string]:number }= {}

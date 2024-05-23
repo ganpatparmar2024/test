@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import { con } from "../config/config";
-import { MysqlError } from "mysql";
-import { FieldPacket, QueryResult, RowDataPacket } from "mysql2";
-import { error } from "console";
+
 
 
 interface PageId{
@@ -10,7 +8,7 @@ interface PageId{
 }
 
 export const renderResult = (req:Request<{},{},{},PageId>,res:Response)=>{
-    var pid = req.query.page||1
+    var pid:(string|number) = req.query.page||1
     if (pid==undefined) {
       pid="1"
     }
